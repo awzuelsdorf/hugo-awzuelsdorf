@@ -1,0 +1,23 @@
+cd /c
+mkdir Hugo
+mkdir Hugo/bin
+mkdir Hugo/Sites
+cd Hugo/bin/
+cp ~/Downloads/hugo_0.102.1_Windows-64bit.zip .
+unzip hugo_0.102.1_Windows-64bit.zip 
+exit
+echo $PATH | grep -i hugo
+cd 
+hugo help
+cd /c/Hugo/Sites
+hugo new site awzuelsdorf.github.io
+cd awzuelsdorf.github.io/
+ls
+git init
+git submodule add https://github.com/halogenica/beautifulhugo themes/beautifulhugo
+hugo new posts/first-hugo-post.md
+vim content/posts/first-hugo-post.md 
+hugo server -D
+hugo -D
+ls
+ls public/

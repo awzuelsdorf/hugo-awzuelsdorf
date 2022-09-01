@@ -1,0 +1,4 @@
+baseURL = 'http://awzuelsdorf.github.io/'
+languageCode = 'en-us'
+title = "Andy Zuelsdorf's Blog"
+theme = 'beautifulhugo'
