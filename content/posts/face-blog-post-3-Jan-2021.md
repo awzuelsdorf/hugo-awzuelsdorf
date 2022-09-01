@@ -1,5 +1,5 @@
 ---
-title: "Optimizing Facial Recognition for Raspberry Pi Zero W and Arducam: Language-Agnostic"
+title: "Optimizing Facial Recognition for Raspberry Pi Zero W and Arducam"
 date: 2021-01-03T00:00:00-04:00
 draft: true
 ---
@@ -44,5 +44,4 @@ With this new tool metaphorically in my belt and literally in my code, I tried r
 			 
 While it is possible that Python may never match an equivalent applicaton written in C++ in the area of facial recognition, it is important to note that none of the optimizations used here were language-specific. They can be used in any language, and none of them required any groundbreaking research or truly novel inventions. It is true that not every problem will have these optimizations available (if your application is network-bound, then minimizing disk access most likely will not buy you much). But it shows that using a higher level language is not a death sentence for performance, and that rewriting an application to use lower-level languages is not the only or easiest tool in one's toolbelt.
 
-Update (5 Jan. 2021): If you are interested in the code for the camera, taking into account the caveats described here, then please visit [the Bitbucket repo](https://bitbucket.org/socialmonitor/face/src/master). I tend to do most of my development on Bitbucket, though I appreciate the free github.io page that GitHub provides.
-
+*Update (5 Jan. 2021): If you are interested in the code for the camera, taking into account the caveats described here, then please visit [the Bitbucket repo](https://bitbucket.org/socialmonitor/face/src/master). I tend to do most of my development on Bitbucket, though I appreciate the free github.io page that GitHub provides.*
