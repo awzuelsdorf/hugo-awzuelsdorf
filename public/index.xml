@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Andy Zuelsdorf&#39;s Blog</title>
-    <link>http://awzuelsdorf.github.io/</link>
+    <link>https://awzuelsdorf.github.io/</link>
     <description>Recent content on Andy Zuelsdorf&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 05 Feb 2022 00:00:00 -0400</lastBuildDate><atom:link href="http://awzuelsdorf.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 05 Feb 2022 00:00:00 -0400</lastBuildDate><atom:link href="https://awzuelsdorf.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Domovoi: PiHole Enhanced Protection</title>
-      <link>http://awzuelsdorf.github.io/posts/domovoi-pi-hole-enhanced-protection-5-feb-2022/</link>
+      <link>https://awzuelsdorf.github.io/posts/domovoi-pi-hole-enhanced-protection-5-feb-2022/</link>
       <pubDate>Sat, 05 Feb 2022 00:00:00 -0400</pubDate>
       
-      <guid>http://awzuelsdorf.github.io/posts/domovoi-pi-hole-enhanced-protection-5-feb-2022/</guid>
+      <guid>https://awzuelsdorf.github.io/posts/domovoi-pi-hole-enhanced-protection-5-feb-2022/</guid>
       <description>Overview
 This article describes how to set up Domovoi, a Python and Bash repository that created to enhance the protection offered by Pi-Hole. Domovoi will send text alerts via Twilio whenever PiHole detects that someone on the network has accessed a previously-unseen or seldom-seen domain, and whether the request was permitted or blocked. Additionally, it can perform geolocation on the IP addresses returned by the downstream DNS server to decide whether a DNS query should be blocked or permitted based on which country corresponds to the IP address.</description>
     </item>
     
     <item>
       <title>Geoip Blocking Using Windows Firewall and Regional Internet Registries</title>
-      <link>http://awzuelsdorf.github.io/posts/geoip-blocking-using-windows-firewall-and-regional-internet-registries-8-oct-2021/</link>
+      <link>https://awzuelsdorf.github.io/posts/geoip-blocking-using-windows-firewall-and-regional-internet-registries-8-oct-2021/</link>
       <pubDate>Fri, 08 Oct 2021 00:00:00 -0400</pubDate>
       
-      <guid>http://awzuelsdorf.github.io/posts/geoip-blocking-using-windows-firewall-and-regional-internet-registries-8-oct-2021/</guid>
+      <guid>https://awzuelsdorf.github.io/posts/geoip-blocking-using-windows-firewall-and-regional-internet-registries-8-oct-2021/</guid>
       <description>Overview
 This article will describe using data provided by the Regional Internet Registries (RIRs) APNIC and RIPE NCC to block IP addresses located in Russia, China, Iran, and North Korea. The method described here can be used to block any country whose IP address space is managed by APNIC or RIPE NCC, not just Russia, China, Iran, or North Korea.
 Motivation: Why Block a Whole Country?
@@ -31,10 +31,10 @@ Blocking a whole country&amp;rsquo;s IP address space can be useful when one has
     
     <item>
       <title>Phishing Boat</title>
-      <link>http://awzuelsdorf.github.io/posts/phishing-boat-typosquatting-25-july-2021/</link>
+      <link>https://awzuelsdorf.github.io/posts/phishing-boat-typosquatting-25-july-2021/</link>
       <pubDate>Sun, 25 Jul 2021 00:00:00 -0400</pubDate>
       
-      <guid>http://awzuelsdorf.github.io/posts/phishing-boat-typosquatting-25-july-2021/</guid>
+      <guid>https://awzuelsdorf.github.io/posts/phishing-boat-typosquatting-25-july-2021/</guid>
       <description>Overview
 This article will describe Phishing Boat, a Chrome and Firefox extension I made a few years ago. Even though this is an older extension, there is still active development and features that can add value in terms of increased security or usability are being added. One of those features, which addresses the use of &amp;ldquo;typosquatting&amp;rdquo; domains in phishing attempts, is described here.
 Background: Why Use Phishing Boat?
@@ -43,20 +43,20 @@ Phishing Boat was created to address some of the limitations in other methods of
     
     <item>
       <title>Geolocation Viewer and Cleaner for JPEG Images</title>
-      <link>http://awzuelsdorf.github.io/posts/geolocation-viewer-blog-post-24-jan-2021/</link>
+      <link>https://awzuelsdorf.github.io/posts/geolocation-viewer-blog-post-24-jan-2021/</link>
       <pubDate>Sun, 24 Jan 2021 00:00:00 -0400</pubDate>
       
-      <guid>http://awzuelsdorf.github.io/posts/geolocation-viewer-blog-post-24-jan-2021/</guid>
+      <guid>https://awzuelsdorf.github.io/posts/geolocation-viewer-blog-post-24-jan-2021/</guid>
       <description>Overview
 In this article, I describe the features and future work for a website that reads location data embedded in JPEG files&amp;rsquo; EXIF metadata to allow nontechnical users to view what information is in the images they are capturing and often uploading to websites or sending to others (such as the people they meet on dating sites). This can help people be aware of and maintain control over what information they offer to websites and others.</description>
     </item>
     
     <item>
       <title>Optimizing Facial Recognition for Raspberry Pi Zero W and Arducam</title>
-      <link>http://awzuelsdorf.github.io/posts/face-blog-post-3-jan-2021/</link>
+      <link>https://awzuelsdorf.github.io/posts/face-blog-post-3-jan-2021/</link>
       <pubDate>Sun, 03 Jan 2021 00:00:00 -0400</pubDate>
       
-      <guid>http://awzuelsdorf.github.io/posts/face-blog-post-3-jan-2021/</guid>
+      <guid>https://awzuelsdorf.github.io/posts/face-blog-post-3-jan-2021/</guid>
       <description>Overview
 In this article, I present how several problem-specific optimizations enabled me to get an amortized 20-fold decrease in worst-case processing time for a facial-recognition-enabled security camera that I had built using a Raspberry Pi Zero W with an Arducam camera module and a third-party Python facial recognition library. This is not intended to be a &amp;ldquo;how-to&amp;rdquo; article for setting up a real-time facial recognition-enabled camera, nor is it intended to only apply to the issue of optimizing facial recognition.</description>
     </item>
