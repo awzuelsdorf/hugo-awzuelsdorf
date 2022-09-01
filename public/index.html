@@ -168,8 +168,8 @@
           
           
             <article class="post-preview">
-    <a href="http://awzuelsdorf.github.io/posts/first-hugo-post/">
-        <h2 class="post-title">First Hugo Post</h2>
+    <a href="http://awzuelsdorf.github.io/posts/domovoi-pi-hole-enhanced-protection-5-feb-2022/">
+        <h2 class="post-title">Domovoi: PiHole Enhanced Protection</h2>
         
         
         
@@ -179,7 +179,7 @@
         <span class="post-meta">
   
   
-  <i class="fas fa-calendar"></i>&nbsp;Posted on August 30, 2022
+  <i class="fas fa-calendar"></i>&nbsp;Posted on February 5, 2022
   
   
   
@@ -195,7 +195,165 @@
     </p>
     <div class="post-entry">
         
+        Overview
+This article describes how to set up Domovoi, a Python and Bash repository that created to enhance the protection offered by Pi-Hole. Domovoi will send text alerts via Twilio whenever PiHole detects that someone on the network has accessed a previously-unseen or seldom-seen domain, and whether the request was permitted or blocked. Additionally, it can perform geolocation on the IP addresses returned by the downstream DNS server to decide whether a DNS query should be blocked or permitted based on which country corresponds to the IP address.
+        <a href="http://awzuelsdorf.github.io/posts/domovoi-pi-hole-enhanced-protection-5-feb-2022/" class="post-read-more">[Read More]</a>
         
+    </div>
+
+    
+
+</article>
+          
+            <article class="post-preview">
+    <a href="http://awzuelsdorf.github.io/posts/geoip-blocking-using-windows-firewall-and-regional-internet-registries-8-oct-2021/">
+        <h2 class="post-title">Geoip Blocking Using Windows Firewall and Regional Internet Registries</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on October 8, 2021
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        Overview
+This article will describe using data provided by the Regional Internet Registries (RIRs) APNIC and RIPE NCC to block IP addresses located in Russia, China, Iran, and North Korea. The method described here can be used to block any country whose IP address space is managed by APNIC or RIPE NCC, not just Russia, China, Iran, or North Korea.
+Motivation: Why Block a Whole Country?
+Blocking a whole country&rsquo;s IP address space can be useful when one has no legitimate reason to visit any website or access any resource within that country, either now or in the near future.
+        <a href="http://awzuelsdorf.github.io/posts/geoip-blocking-using-windows-firewall-and-regional-internet-registries-8-oct-2021/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+
+</article>
+          
+            <article class="post-preview">
+    <a href="http://awzuelsdorf.github.io/posts/phishing-boat-typosquatting-25-july-2021/">
+        <h2 class="post-title">Phishing Boat</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on July 25, 2021
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        Overview
+This article will describe Phishing Boat, a Chrome and Firefox extension I made a few years ago. Even though this is an older extension, there is still active development and features that can add value in terms of increased security or usability are being added. One of those features, which addresses the use of &ldquo;typosquatting&rdquo; domains in phishing attempts, is described here.
+Background: Why Use Phishing Boat?
+Phishing Boat was created to address some of the limitations in other methods of detecting phishing emails (reading links&rsquo; URLs carefully before clicking on them, website scanning, and blacklists/whitelists).
+        <a href="http://awzuelsdorf.github.io/posts/phishing-boat-typosquatting-25-july-2021/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+
+</article>
+          
+            <article class="post-preview">
+    <a href="http://awzuelsdorf.github.io/posts/geolocation-viewer-blog-post-24-jan-2021/">
+        <h2 class="post-title">Geolocation Viewer and Cleaner for JPEG Images</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on January 24, 2021
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        Overview
+In this article, I describe the features and future work for a website that reads location data embedded in JPEG files&rsquo; EXIF metadata to allow nontechnical users to view what information is in the images they are capturing and often uploading to websites or sending to others (such as the people they meet on dating sites). This can help people be aware of and maintain control over what information they offer to websites and others.
+        <a href="http://awzuelsdorf.github.io/posts/geolocation-viewer-blog-post-24-jan-2021/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+
+</article>
+          
+            <article class="post-preview">
+    <a href="http://awzuelsdorf.github.io/posts/face-blog-post-3-jan-2021/">
+        <h2 class="post-title">Optimizing Facial Recognition for Raspberry Pi Zero W and Arducam</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on January 3, 2021
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        Overview
+In this article, I present how several problem-specific optimizations enabled me to get an amortized 20-fold decrease in worst-case processing time for a facial-recognition-enabled security camera that I had built using a Raspberry Pi Zero W with an Arducam camera module and a third-party Python facial recognition library. This is not intended to be a &ldquo;how-to&rdquo; article for setting up a real-time facial recognition-enabled camera, nor is it intended to only apply to the issue of optimizing facial recognition.
+        <a href="http://awzuelsdorf.github.io/posts/face-blog-post-3-jan-2021/" class="post-read-more">[Read More]</a>
         
     </div>
 

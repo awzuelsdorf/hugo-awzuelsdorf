@@ -7,7 +7,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Posts - Andy Zuelsdorf&#39;s Blog</title><script type="application/ld+json">
+  <title>Geolocation Viewer and Cleaner for JPEG Images - Andy Zuelsdorf&#39;s Blog</title>
+  <meta name="description" content="Overview
+In this article, I describe the features and future work for a website that reads location data embedded in JPEG files&rsquo; EXIF metadata to allow nontechnical users to view what information is in the images they are capturing and often uploading to websites or sending to others (such as the people they meet on dating sites). This can help people be aware of and maintain control over what information they offer to websites and others."><script type="application/ld+json">
 {
     "@context": "http://schema.org",
     "@type": "WebSite",
@@ -27,13 +29,65 @@
   
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "http:\/\/awzuelsdorf.github.io\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "http:\/\/awzuelsdorf.github.io\/posts\/geolocation-viewer-blog-post-24-jan-2021\/",
+          "name": "Geolocation viewer and cleaner for jpeg images"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : ""
+  },
+  "headline": "Geolocation Viewer and Cleaner for JPEG Images",
+  "description" : "Overview\nIn this article, I describe the features and future work for a website that reads location data embedded in JPEG files\u0026rsquo; EXIF metadata to allow nontechnical users to view what information is in the images they are capturing and often uploading to websites or sending to others (such as the people they meet on dating sites). This can help people be aware of and maintain control over what information they offer to websites and others.",
+  "inLanguage" : "en",
+  "wordCount":  482 ,
+  "datePublished" : "2021-01-24T00:00:00",
+  "dateModified" : "2021-01-24T00:00:00",
+  "image" : "http:\/\/awzuelsdorf.github.io\/",
+  "keywords" : [ "" ],
+  "mainEntityOfPage" : "http:\/\/awzuelsdorf.github.io\/posts\/geolocation-viewer-blog-post-24-jan-2021\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "http:\/\/awzuelsdorf.github.io\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "http:\/\/awzuelsdorf.github.io\/",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
 
-<meta property="og:title" content="Posts" />
-<meta property="og:url" content="http://awzuelsdorf.github.io/posts/" />
+<meta property="og:title" content="Geolocation Viewer and Cleaner for JPEG Images" />
+<meta property="og:description" content="Overview
+In this article, I describe the features and future work for a website that reads location data embedded in JPEG files&rsquo; EXIF metadata to allow nontechnical users to view what information is in the images they are capturing and often uploading to websites or sending to others (such as the people they meet on dating sites). This can help people be aware of and maintain control over what information they offer to websites and others.">
+<meta property="og:url" content="http://awzuelsdorf.github.io/posts/geolocation-viewer-blog-post-24-jan-2021/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Andy Zuelsdorf&#39;s Blog" />
 
-  <meta name="twitter:title" content="Posts" />
+  <meta name="twitter:title" content="Geolocation Viewer and Cleaner for JPEG Images" />
+  <meta name="twitter:description" content="Overview
+In this article, I describe the features and future work for a website that reads location data embedded in JPEG files&rsquo; EXIF metadata to allow nontechnical users to view what …">
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="generator" content="Hugo 0.102.1" />
   <link rel="alternate" href="http://awzuelsdorf.github.io/index.xml" type="application/rss+xml" title="Andy Zuelsdorf&#39;s Blog"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
@@ -142,7 +196,7 @@
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="posts-heading">
               
-                <h1>Posts</h1>
+                <h1>Geolocation Viewer and Cleaner for JPEG Images</h1>
               
               
                 <hr class="small">
@@ -159,211 +213,51 @@
 
 
     
-  <div class="container" role="main">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p><em><strong>Overview</strong></em></p>
+<p>In this article, I describe the features and future work for <a href="https://geolocation-viewer-and-cleaner.herokuapp.com/">a website</a> that reads location data embedded in JPEG files&rsquo; EXIF metadata to allow nontechnical users to view what information is in the images they are capturing and often uploading to websites or sending to others (such as the people they meet on dating sites). This can help people be aware of and maintain control over what information they offer to websites and others.</p>
+<p><em><strong>Background</strong></em></p>
+<p>Many times, JPEG images taken on smartphones or even standalone cameras can contain more data than just the pixels of the image. An example of this is <a href="https://github.com/zhso/jpeg-exif/blob/master/test/IMG_0001.JPG">this image</a>, which appears to have been taken somewhere close to the Wangjing subdistrict of Beijing, People&rsquo;s Republic of China. Looking at just the data in this photo, one would not be able to tell where this photo was taken. But anyone who has this photo can look at its EXIF metadata to see the latitude/longitude of where it was taken, potentially posing a security risk to the whomever took the photo or anyone/anything captured in the photo.</p>
+<p><em><strong>Viewer</strong></em></p>
+<p>I&rsquo;ve created <a href="https://geolocation-viewer-and-cleaner.herokuapp.com/">a spartan but functional website</a> to allow users to view what EXIF metadata is in a JPEG photo they upload. None of this information is stored on the server and none of it is shared with third parties, making it an attractive tool for those who do not want to write or download their own geolocation software to parse their images.</p>
+<p>For images that have metadata, there is also a link to the given latitude/longitude as displayed on Google Maps, so that one can see just how accurate this metadata can be (and how creepy it can be, too!)</p>
+<p>There is a 10MB limit on file size, and rate limiting is in place so that one can only make 10 requests per minute per IP address. This isn&rsquo;t a completely robust way of limiting users, as one could spoof IP addresses (assuming one does not care about the response) or use Tor or a VPN to switch which IP address one is using. However, it should help block at least some bad actors from completely overwhelming the site with requests.</p>
+<p><em><strong>Conclusion/Future Work</strong></em></p>
+<p>I am still working on the cleaning part, which will allow the user to download the image with the relevant geolocation data erased. I also want to implement caching of the metadata based on the uploaded image data&rsquo;s hash so that anyone who repeatedly uploads the same image does not have to wait as long to get an answer back.</p>
+<p><em>Update (30 Aug. 2022): this website will go offline on 7 Sept. 2022 as a result of heroku changing its billing policies. While it may be rehosted elsewhere eventually, there are no plans to do so at this time due to limited interest in the site and the availability of other free, similarly reputable tools.</em></p>
+
+
         
-        <div class="posts-list">
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
           
-            <article class="post-preview">
-    <a href="http://awzuelsdorf.github.io/posts/domovoi-pi-hole-enhanced-protection-5-feb-2022/">
-        <h2 class="post-title">Domovoi: PiHole Enhanced Protection</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on February 5, 2022
-  
-  
-  
-  
-    
-      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;
-    
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        Overview
-This article describes how to set up Domovoi, a Python and Bash repository that created to enhance the protection offered by Pi-Hole. Domovoi will send text alerts via Twilio whenever PiHole detects that someone on the network has accessed a previously-unseen or seldom-seen domain, and whether the request was permitted or blocked. Additionally, it can perform geolocation on the IP addresses returned by the downstream DNS server to decide whether a DNS query should be blocked or permitted based on which country corresponds to the IP address.
-        <a href="http://awzuelsdorf.github.io/posts/domovoi-pi-hole-enhanced-protection-5-feb-2022/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-
-</article>
+            <li class="previous">
+              <a href="http://awzuelsdorf.github.io/posts/face-blog-post-3-jan-2021/" data-toggle="tooltip" data-placement="top" title="Optimizing Facial Recognition for Raspberry Pi Zero W and Arducam">&larr; Previous Post</a>
+            </li>
           
-            <article class="post-preview">
-    <a href="http://awzuelsdorf.github.io/posts/geoip-blocking-using-windows-firewall-and-regional-internet-registries-8-oct-2021/">
-        <h2 class="post-title">Geoip Blocking Using Windows Firewall and Regional Internet Registries</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on October 8, 2021
-  
-  
-  
-  
-    
-      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;
-    
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        Overview
-This article will describe using data provided by the Regional Internet Registries (RIRs) APNIC and RIPE NCC to block IP addresses located in Russia, China, Iran, and North Korea. The method described here can be used to block any country whose IP address space is managed by APNIC or RIPE NCC, not just Russia, China, Iran, or North Korea.
-Motivation: Why Block a Whole Country?
-Blocking a whole country&rsquo;s IP address space can be useful when one has no legitimate reason to visit any website or access any resource within that country, either now or in the near future.
-        <a href="http://awzuelsdorf.github.io/posts/geoip-blocking-using-windows-firewall-and-regional-internet-registries-8-oct-2021/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-
-</article>
           
-            <article class="post-preview">
-    <a href="http://awzuelsdorf.github.io/posts/phishing-boat-typosquatting-25-july-2021/">
-        <h2 class="post-title">Phishing Boat</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on July 25, 2021
-  
-  
-  
-  
-    
-      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;
-    
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        Overview
-This article will describe Phishing Boat, a Chrome and Firefox extension I made a few years ago. Even though this is an older extension, there is still active development and features that can add value in terms of increased security or usability are being added. One of those features, which addresses the use of &ldquo;typosquatting&rdquo; domains in phishing attempts, is described here.
-Background: Why Use Phishing Boat?
-Phishing Boat was created to address some of the limitations in other methods of detecting phishing emails (reading links&rsquo; URLs carefully before clicking on them, website scanning, and blacklists/whitelists).
-        <a href="http://awzuelsdorf.github.io/posts/phishing-boat-typosquatting-25-july-2021/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-
-</article>
+            <li class="next">
+              <a href="http://awzuelsdorf.github.io/posts/phishing-boat-typosquatting-25-july-2021/" data-toggle="tooltip" data-placement="top" title="Phishing Boat">Next Post &rarr;</a>
+            </li>
           
-            <article class="post-preview">
-    <a href="http://awzuelsdorf.github.io/posts/geolocation-viewer-blog-post-24-jan-2021/">
-        <h2 class="post-title">Geolocation Viewer and Cleaner for JPEG Images</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on January 24, 2021
-  
-  
-  
-  
-    
-      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;
-    
-  
-  
-</span>
+        </ul>
+      
 
 
-    </p>
-    <div class="post-entry">
-        
-        Overview
-In this article, I describe the features and future work for a website that reads location data embedded in JPEG files&rsquo; EXIF metadata to allow nontechnical users to view what information is in the images they are capturing and often uploading to websites or sending to others (such as the people they meet on dating sites). This can help people be aware of and maintain control over what information they offer to websites and others.
-        <a href="http://awzuelsdorf.github.io/posts/geolocation-viewer-blog-post-24-jan-2021/" class="post-read-more">[Read More]</a>
-        
-    </div>
+      
 
-    
-
-</article>
-          
-            <article class="post-preview">
-    <a href="http://awzuelsdorf.github.io/posts/face-blog-post-3-jan-2021/">
-        <h2 class="post-title">Optimizing Facial Recognition for Raspberry Pi Zero W and Arducam</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on January 3, 2021
-  
-  
-  
-  
-    
-      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;
-    
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        Overview
-In this article, I present how several problem-specific optimizations enabled me to get an amortized 20-fold decrease in worst-case processing time for a facial-recognition-enabled security camera that I had built using a Raspberry Pi Zero W with an Arducam camera module and a third-party Python facial recognition library. This is not intended to be a &ldquo;how-to&rdquo; article for setting up a real-time facial recognition-enabled camera, nor is it intended to only apply to the issue of optimizing facial recognition.
-        <a href="http://awzuelsdorf.github.io/posts/face-blog-post-3-jan-2021/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-
-</article>
-          
-        </div>
-        
-      </div>
     </div>
   </div>
+</div>
 
       
 <footer>

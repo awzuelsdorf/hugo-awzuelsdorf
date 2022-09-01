@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Phishing Boat - Andy Zuelsdorf&#39;s Blog</title>
+  <meta name="description" content="Overview
+This article will describe Phishing Boat, a Chrome and Firefox extension I made a few years ago. Even though this is an older extension, there is still active development and features that can add value in terms of increased security or usability are being added. One of those features, which addresses the use of &ldquo;typosquatting&rdquo; domains in phishing attempts, is described here.
+Background: Why Use Phishing Boat?
+Phishing Boat was created to address some of the limitations in other methods of detecting phishing emails (reading links&rsquo; URLs carefully before clicking on them, website scanning, and blacklists/whitelists)."><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Andy Zuelsdorf\u0027s Blog",
+    
+    "url": "http:\/\/awzuelsdorf.github.io\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "http:\/\/awzuelsdorf.github.io\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "http:\/\/awzuelsdorf.github.io\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "http:\/\/awzuelsdorf.github.io\/posts\/phishing-boat-typosquatting-25-july-2021\/",
+          "name": "Phishing boat"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : ""
+  },
+  "headline": "Phishing Boat",
+  "description" : "Overview\nThis article will describe Phishing Boat, a Chrome and Firefox extension I made a few years ago. Even though this is an older extension, there is still active development and features that can add value in terms of increased security or usability are being added. One of those features, which addresses the use of \u0026ldquo;typosquatting\u0026rdquo; domains in phishing attempts, is described here.\nBackground: Why Use Phishing Boat?\nPhishing Boat was created to address some of the limitations in other methods of detecting phishing emails (reading links\u0026rsquo; URLs carefully before clicking on them, website scanning, and blacklists\/whitelists).",
+  "inLanguage" : "en",
+  "wordCount":  793 ,
+  "datePublished" : "2021-07-25T00:00:00",
+  "dateModified" : "2021-07-25T00:00:00",
+  "image" : "http:\/\/awzuelsdorf.github.io\/",
+  "keywords" : [ "" ],
+  "mainEntityOfPage" : "http:\/\/awzuelsdorf.github.io\/posts\/phishing-boat-typosquatting-25-july-2021\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "http:\/\/awzuelsdorf.github.io\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "http:\/\/awzuelsdorf.github.io\/",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Phishing Boat" />
+<meta property="og:description" content="Overview
+This article will describe Phishing Boat, a Chrome and Firefox extension I made a few years ago. Even though this is an older extension, there is still active development and features that can add value in terms of increased security or usability are being added. One of those features, which addresses the use of &ldquo;typosquatting&rdquo; domains in phishing attempts, is described here.
+Background: Why Use Phishing Boat?
+Phishing Boat was created to address some of the limitations in other methods of detecting phishing emails (reading links&rsquo; URLs carefully before clicking on them, website scanning, and blacklists/whitelists).">
+<meta property="og:url" content="http://awzuelsdorf.github.io/posts/phishing-boat-typosquatting-25-july-2021/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Andy Zuelsdorf&#39;s Blog" />
+
+  <meta name="twitter:title" content="Phishing Boat" />
+  <meta name="twitter:description" content="Overview
+This article will describe Phishing Boat, a Chrome and Firefox extension I made a few years ago. Even though this is an older extension, there is still active development and features that …">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="generator" content="Hugo 0.102.1" />
+  <link rel="alternate" href="http://awzuelsdorf.github.io/index.xml" type="application/rss+xml" title="Andy Zuelsdorf&#39;s Blog"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="http://awzuelsdorf.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="http://awzuelsdorf.github.io/css/syntax.css" /><link rel="stylesheet" href="http://awzuelsdorf.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://awzuelsdorf.github.io/">Andy Zuelsdorf&#39;s Blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="posts-heading">
+              
+                <h1>Phishing Boat</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p><em><strong>Overview</strong></em></p>
+<p>This article will describe Phishing Boat, a <a href="https://chrome.google.com/webstore/detail/phishing-boat/ljaiihgfejfaggbjfildfnjdckomlfop">Chrome</a> and <a href="https://addons.mozilla.org/en-US/firefox/addon/phishing-boat/">Firefox</a> extension I made a few years ago. Even though this is an older extension, there is still active development and features that can add value in terms of increased security or usability are being added. One of those features, which addresses the use of &ldquo;typosquatting&rdquo; domains in phishing attempts, is described here.<!-- raw HTML omitted --></p>
+<p><em><strong>Background: Why Use Phishing Boat?</strong></em></p>
+<p>Phishing Boat was created to address some of the limitations in other methods of detecting phishing emails (reading links&rsquo; URLs carefully before clicking on them, website scanning, and blacklists/whitelists).</p>
+<p><em><strong>Phishing Boat: Yet Another Step in the Right Direction</strong></em></p>
+<p>Phishing Boat attempts to combat phishing emails by observing which websites one has visited from his/her computer over a period of time. After this &ldquo;learning period&rdquo; has passed, a popup window will appear when one clicks the link to a website that one has not visited since the extension was installed. It will show the name of the website&rsquo;s domain and ask for confirmation before continuing. If one clicks &ldquo;OK&rdquo;, then the browser will follow the link like normal. If one clicks &ldquo;Cancel&rdquo;, then the browser will remain on the current page. This way, the phishing attempt is foiled since the user does not actually visit the site behind the phishing attempt. Since most people don&rsquo;t visit more than a few dozen sites regularly, these alerts tend to fire very infrequently (in my own experience, I usually only see alerts once or twice a week). This solves the problem that the traditional method has with the mental burden of reading each URL, and it avoids issues with scan latency or heuristics based on site age. In this way, it is another step in the right direction, though it still has some limitations that will be detailed later.</p>
+<p><em><strong>The New Feature</strong></em></p>
+<p>The new feature I have released is one that will provide more amplifiying information in popup messages to the user depending upon how closely the domain of an unfamiliar URL is to the other sites that user has visited. Namely, if the domain in the link is within<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> two letters of a domain that the user has already visited, then the popup message displayed to the user will display both the link&rsquo;s domain and the previously-visited, similar domain. The message will ask the user to confirm the decision to go to the new domain, knowing that it is very similar to another domain and is more likely to be a phishing domain. The messages previously displayed when the user visited an unfamiliar domain will still be displayed if the new domain is different and not similar to any previously-seen domains.</p>
+<p><em><strong>Limitations/Future Work</strong></em></p>
+<p>While I use Phishing Boat virtually every day and it has helped me avoid cleverly disguised links for over four years now, it has some disadvantages. First, it is a browser extension, so it cannot be used on most mobile devices currently. Bringing Phishing Boat to a mobile platform is part of my future plans for this application, but there are pros and cons to making a browser app that can support this type of functionality or making an app that can somehow integrate with existing browser apps, and I am still working through those pros and cons.<!-- raw HTML omitted --><!-- raw HTML omitted -->Additionally, it is possible that one could visit a phishing site within the learning period mentioned previously, in which case one would not receive a popup asking for confirmation and one could fall victim to a phishing attack. For a while, Phishing Boat did not have a learning period. While this fixed the issue of people potentially not receiving confirmation messages, this resulted in a deluge of messages during the first few days of using Phishing Boat. This was not a good experience and was seen as a flaw since it would discourage many people from using this application more than a learning period would. It is a trade-off and it seems like the &ldquo;right&rdquo; trade to make, since it effectively means that the user will be in a condition no worse than the state he/she was in before getting Phishing Boat, and it greatly decreases the likelihood of him/her quitting on Phishing Boat early and resort to less effective methods at combating phishing attempts.<!-- raw HTML omitted --><!-- raw HTML omitted -->One additional feature I can think of adding is to use Amazon Web Information Services&rsquo; Alexa service to automatically update a list of the most popular websites on the web, which would act as a whitelist for Phishing Boat to avoid flagging websites that the user may not have visited during the learning period but are very unlikely to be phishing websites.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>a domain is &ldquo;within two letters&rdquo; of a different domain if the Levenshtein distance between the two domains is less than two.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="http://awzuelsdorf.github.io/posts/geolocation-viewer-blog-post-24-jan-2021/" data-toggle="tooltip" data-placement="top" title="Geolocation Viewer and Cleaner for JPEG Images">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="http://awzuelsdorf.github.io/posts/geoip-blocking-using-windows-firewall-and-regional-internet-registries-8-oct-2021/" data-toggle="tooltip" data-placement="top" title="Geoip Blocking Using Windows Firewall and Regional Internet Registries">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2022
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="http://awzuelsdorf.github.io/">Andy Zuelsdorf&#39;s Blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.102.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="http://awzuelsdorf.github.io/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="http://awzuelsdorf.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

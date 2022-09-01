@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Optimizing Facial Recognition for Raspberry Pi Zero W and Arducam - Andy Zuelsdorf&#39;s Blog</title>
+  <meta name="description" content="Overview
+In this article, I present how several problem-specific optimizations enabled me to get an amortized 20-fold decrease in worst-case processing time for a facial-recognition-enabled security camera that I had built using a Raspberry Pi Zero W with an Arducam camera module and a third-party Python facial recognition library. This is not intended to be a &ldquo;how-to&rdquo; article for setting up a real-time facial recognition-enabled camera, nor is it intended to only apply to the issue of optimizing facial recognition."><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Andy Zuelsdorf\u0027s Blog",
+    
+    "url": "http:\/\/awzuelsdorf.github.io\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "http:\/\/awzuelsdorf.github.io\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "http:\/\/awzuelsdorf.github.io\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "http:\/\/awzuelsdorf.github.io\/posts\/face-blog-post-3-jan-2021\/",
+          "name": "Optimizing facial recognition for raspberry pi zero w and arducam"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : ""
+  },
+  "headline": "Optimizing Facial Recognition for Raspberry Pi Zero W and Arducam",
+  "description" : "Overview\nIn this article, I present how several problem-specific optimizations enabled me to get an amortized 20-fold decrease in worst-case processing time for a facial-recognition-enabled security camera that I had built using a Raspberry Pi Zero W with an Arducam camera module and a third-party Python facial recognition library. This is not intended to be a \u0026ldquo;how-to\u0026rdquo; article for setting up a real-time facial recognition-enabled camera, nor is it intended to only apply to the issue of optimizing facial recognition.",
+  "inLanguage" : "en",
+  "wordCount":  2293 ,
+  "datePublished" : "2021-01-03T00:00:00",
+  "dateModified" : "2021-01-03T00:00:00",
+  "image" : "http:\/\/awzuelsdorf.github.io\/",
+  "keywords" : [ "" ],
+  "mainEntityOfPage" : "http:\/\/awzuelsdorf.github.io\/posts\/face-blog-post-3-jan-2021\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "http:\/\/awzuelsdorf.github.io\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "http:\/\/awzuelsdorf.github.io\/",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Optimizing Facial Recognition for Raspberry Pi Zero W and Arducam" />
+<meta property="og:description" content="Overview
+In this article, I present how several problem-specific optimizations enabled me to get an amortized 20-fold decrease in worst-case processing time for a facial-recognition-enabled security camera that I had built using a Raspberry Pi Zero W with an Arducam camera module and a third-party Python facial recognition library. This is not intended to be a &ldquo;how-to&rdquo; article for setting up a real-time facial recognition-enabled camera, nor is it intended to only apply to the issue of optimizing facial recognition.">
+<meta property="og:url" content="http://awzuelsdorf.github.io/posts/face-blog-post-3-jan-2021/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Andy Zuelsdorf&#39;s Blog" />
+
+  <meta name="twitter:title" content="Optimizing Facial Recognition for Raspberry Pi Zero W and Arducam" />
+  <meta name="twitter:description" content="Overview
+In this article, I present how several problem-specific optimizations enabled me to get an amortized 20-fold decrease in worst-case processing time for a facial-recognition-enabled security …">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="generator" content="Hugo 0.102.1" />
+  <link rel="alternate" href="http://awzuelsdorf.github.io/index.xml" type="application/rss+xml" title="Andy Zuelsdorf&#39;s Blog"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="http://awzuelsdorf.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="http://awzuelsdorf.github.io/css/syntax.css" /><link rel="stylesheet" href="http://awzuelsdorf.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://awzuelsdorf.github.io/">Andy Zuelsdorf&#39;s Blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="posts-heading">
+              
+                <h1>Optimizing Facial Recognition for Raspberry Pi Zero W and Arducam</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p><em><strong>Overview</strong></em></p>
+<p>In this article, I present how several problem-specific optimizations enabled me to get an amortized 20-fold decrease in worst-case processing time for a facial-recognition-enabled security camera that I had built using a Raspberry Pi Zero W with an Arducam camera module and a third-party Python facial recognition library. This is not intended to be a &ldquo;how-to&rdquo; article for setting up a real-time facial recognition-enabled camera, nor is it intended to only apply to the issue of optimizing facial recognition. Rather, its intended message is that that even applications written in relatively &ldquo;slow&rdquo; languages like Python can achieve massive increases in speed if one utilizes system resources efficiently, minimizes unneeded work, and uses appropriate algorithms to minimize the amount of work needed.</p>
+<p><em><strong>Background: How Watching TV Can Teach You New Things</strong></em></p>
+<p>In 2017, I was binge-watching &ldquo;Green Arrow&rdquo; and &ldquo;Flash&rdquo; on Netflix. Hardly an episode went by without one of the protagonists, no matter how nontechnical, effortlessly using facial recognition to reveal the identity of an antagonist using just his/her photo. This photo itself was somehow whisked off of an ATM or security camera from a remote location by the team&rsquo;s resident tech geek. The obvious &ldquo;movie magic&rdquo; aside, I wondered how difficult it would be to make my own facial recognition system and, more importantly, could I get it to efficiently classify photos. I put together a proof-of-concept using Adam Geitgey&rsquo;s <a href="https://github.com/ageitgey/face_recognition#face-recognition">face_recognition</a> Python library that could classify one photo per second on the Kubuntu virtual machine that I was running on my laptop. I thought at the time that this was pretty good performance (where I worked at the time, getting results of simulations would take hours, often just to have the simulation die from a segmentation fault or exception in the last stages of processing with no &ldquo;checkpoints&rdquo; to restart from, so my patience with software runtime was too high for my own good). However, by this point I was getting involved with other projects that would eventually become the browser extensions <a href="https://chrome.google.com/webstore/detail/phishing-boat/ljaiihgfejfaggbjfildfnjdckomlfop">Phishing Boat</a> and <a href="https://chrome.google.com/webstore/detail/phishing-boat-email/keddichagapeejkhklfakhmkfeehoicd">Phishing Boat Email</a> that I still use to this day. So I shelved the project, having proven that I could create a proof-of-concept facial recognition system that was, from my tests, efficient.</p>
+<p><em><strong>Performance Problems: What Hardware Giveth, PoC Software Taketh Away</strong></em></p>
+<p>Recently, I bought a Raspberry Pi Zero W and an Arducam and decided to see if I could use my PoC facial recognition code to classify images. The Raspberry Pi Zero W, with its paltry 512MB of RAM and 100MB of swap space, quickly caused the inefficiencies of the proof of concept (PoC) to shine through that the relatively beefier hardware on my laptop had allowed to pass unnoticed, and processing times shot through the roof. Some larger images, such as a 2MB image I was using to represent my own face for testing purposes, took <em>two minutes</em> to identify all face locations and generate face encodings, two of the primary steps for facial recognition in my PoC. I tried shrinking the size of the images, hypothesizing that the image I had used was larger than the one I had used years ago. This improved processing somewhat, but it still took over 10 seconds to compute locations and 14 seconds to compute encodings on a 512px by 256px image. This didn&rsquo;t include the amount of time needed to take the picture and save it to disk. It also was kind of a hack: I was compromising the integrity of the image by shrinking it, which would make finding the location of facial features more difficult and compromise accuracy. I knew that Python wasn&rsquo;t the fastest gun in the west in general, but this was more than language and interpreter-specific woes. This was most likely due to inefficiencies in how the software was processing these images.</p>
+<p><em><strong>Minimizing Redundant Work and Caching Commonly Referenced Values: How the PoC Got Its Groove Back, Part 1</strong></em></p>
+<p>I approached the problem by first focusing on what work I could eliminate. I noted that my code was repeatedly finding face locations and encodings for static images, like the 2MB image of my face that I was using for testing. However, this was redundant work. The location of my face in that image was not changing, nor did the encodings changes between calls to the face encoding extractor. So, I decided to save the encodings (which were a 128-element vector of 64-bit floats) to disk using after the first time the program processed an image. For subsequent images, I checked to see if a given image file I wanted to find encodings from had a corresponding encoding file already on disk. If it did, I would load the encodings from that file and continue. This way, only the first iteration of the first time the program ran was slow. This was also, oddly enough, where I got the biggest bang for my buck, as processing the 2MB photo from earlier the first time still took two minutes the first iteration of the first time I ran the program, but subsequent runs took only a second to load from disk. A second was still a long time, but smaller images loaded even faster. And having runtime drop from two minutes plus per iteration to less than thirty seconds per iteration was definitely a win in my book. But there were more wins to come. I realized that, since I would probably only have up to 1000 pictures that I cared to classify since this was a security camera as opposed to a more general application, like a background check system, I could store the encodings in memory for only 128 * 8 * 1000 = 1024000B, or approximately 1MB of RAM. This reduced the load time from a second to only a little over a tenth of a second. This was not as big a win as before, but it showed how caching commonly used values in memory was more efficient than reaching out to data stores and could yield order-of-magnitude speedups, at least in certain parts of processing.</p>
+<p>At this point, I was pretty happy. My code was still slow overall, but I had achieve some pretty significant wins without having to completely refactor my code or move to another programming language.</p>
+<p><em><strong>Haar Cascades and Appropriate Algorithms: Working Smarter, Not Harder</strong></em></p>
+<p>While processing the static images was no longer an issue, I still had the issue of new images taking a long time to process. I could make very few assumptions about these images, as these were taken by the Arducam and fed into the Raspberry Pi, then into my software. Caching would not save me here. I needed to process these images more efficiently.</p>
+<p>At first, I tried the shortcut I mentioned before (resizing the image). I experimented with different image sizes, trying to balance accuracy with runtime. If the images were too small, they would fail in the face location phase. But if the images were too large, they would take an exorbitant amount of time to find face locations or encodings. I found that 512px images by 256px images were okay at short distances, which would probably be okay for an indoor security camera, but I knew this was a hack and I wanted to find a better way to have both accuracy and performance.</p>
+<p>I searched online for methods to improve face location detection, one of the more expensive stages of this process, and found <a href="https://medium.com/@cristinamanoila28/face-recognition-using-opencv-haar-cascade-classifications-1d42a7a5897">this article on Haar Cascade classifiers</a> by Cristina Manoila. While the face classifier in Cristina&rsquo;s code gave me all that I needed to implement this algorithm, I had never heard of this algorithm before, and I read up on it in <a href="https://docs.opencv.org/3.4/db/d28/tutorial_cascade_classifier.html">the link</a> provided at the end of Cristina&rsquo;s post.</p>
+<p>My understanding of Haar Cascade classifiers is that, instead of evaluating all possible locations and sizes of a given image filter (feature) on an input image, we aggressively narrow down features by how many errors they give us when applied to a training set. This way, we have fewer features to apply, but we still have a lot of potential locations and sizes to apply these features to. To minimize this further, we create different windows over the image and apply a small subset of features to each window. If enough of the features fail when applied to the window, the window is discarded since it probably does not contain a face. This isn&rsquo;t perfect, as there may have been other features that succeeded in this window. But this greatly reduces the amount of time needed to weed out bad candidate windows, and assuming the training set the features were trained on was sufficiently comprehensive, we should still get at least one valid window to represent a face region. In the case where most of the features succeeded, we apply the next subset of features to the window. We keep iterating this process until we have a window that passes all features, which we will take as our face region.</p>
+<p>With this new tool metaphorically in my belt and literally in my code, I tried running the program again with some reasonable values for the classifer&rsquo;s hyperparameters. What followed knocked my socks off. Now, the 512px by 256px images took only a little over a second to get through both face location detection <em>and</em> face encoding computation. I almost thought I had screwed something up, but the images came back with as much accuracy as they had before. The detector was putting out tighter bounding boxes on the input images than the face_recognition library provided out-of-the-box, so the face encoding detection code had to do far less work than before. I tried increasing the size of the images taken by the camera to 1024x1024, and the processing increased to 6 seconds. An 8x increase in the input data for approximately a 6x increase in processing time. Not exactly groundbreaking, especially since the authors of the Haar Cascade classifier and OpenCV had done the heavy lifting for me, but this was a huge increase in performance, and it even scaled with input size well! While some optimizations still could be made to make it faster (more on that soon), this PoC was well on its way to being ready for primetime.</p>
+<p><em><strong>Conclusion/Future Work</strong></em></p>
+<p>6 seconds is still pretty long to wait for an image to process. From here, there are a few things I can do to improve performance.</p>
+<ul>
+<li>Verify hyperparameters. I mentioned that I used some &ldquo;reasonable&rdquo; values for the classifer, but they were found through trial and error as opposed to what I might reasonably expect to see if I am aiming this camera down a long hallway or other environment.</li>
+<li>Object tracking/minimizing what parts of the image we process. The first time we take a picture with the camera, we could process the whole image until we determine where people&rsquo;s faces are. Then, we can focus on those areas, with some height and width buffered in, to greedily focus on areas of the picture where people most likely are. This takes into account that people are not likely to be in some areas of the picture. For example, people are not likely to be close to the floor, as that would indicate they are crawling around the hallway or room, or on the ceiling, as this would indicate that they were recently bit by a radioactive spider and our little security camera probably is not going to do much good in that scenario. If we have been too greedy in our assessment of where people are and we fail to find a face, we can zoom out (increase the height/width buffer, or go back to processing the whole image until we can find a face again).</li>
+<li>Fork face_recognition and modify it to suit our specific problem space. On load, face_recognition loads several larger convolutional neural network models that are only really useful if one has a substantial GPU on his/her system, which is not the case with the Raspberry Pi Zero W. This eats up memory that is probably better spent on other things and is wasteful, though I do not know if it will increase throughput as much as the last point will. At any rate, this article shows the danger of letting wasteful processing stick around rent-free.</li>
+<li>Minimize saving and reloading. Currently, when a photo is taken, it is saved to disk preemptively and then loaded into memory. Assuming we do not care about photos that have no faces in them, PiCamera (the Python library used to interact with Arducam) can allow the images to be processed in-memory. This will further reduce disk access, which is not the largest bottleneck but is still significant and may be the easiest one to overcome at this point.</li>
+</ul>
+<p>While it is possible that Python may never match an equivalent applicaton written in C++ in the area of facial recognition, it is important to note that none of the optimizations used here were language-specific. They can be used in any language, and none of them required any groundbreaking research or truly novel inventions. It is true that not every problem will have these optimizations available (if your application is network-bound, then minimizing disk access most likely will not buy you much). But it shows that using a higher level language is not a death sentence for performance, and that rewriting an application to use lower-level languages is not the only or easiest tool in one&rsquo;s toolbelt.</p>
+<p><em>Update (5 Jan. 2021): If you are interested in the code for the camera, taking into account the caveats described here, then please visit <a href="https://bitbucket.org/socialmonitor/face/src/master">the Bitbucket repo</a>. I tend to do most of my development on Bitbucket, though I appreciate the free github.io page that GitHub provides.</em></p>
+
+
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+          
+            <li class="next">
+              <a href="http://awzuelsdorf.github.io/posts/geolocation-viewer-blog-post-24-jan-2021/" data-toggle="tooltip" data-placement="top" title="Geolocation Viewer and Cleaner for JPEG Images">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2022
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="http://awzuelsdorf.github.io/">Andy Zuelsdorf&#39;s Blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.102.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="http://awzuelsdorf.github.io/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="http://awzuelsdorf.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Domovoi: PiHole Enhanced Protection - Andy Zuelsdorf&#39;s Blog</title>
+  <meta name="description" content="Overview
+This article describes how to set up Domovoi, a Python and Bash repository that created to enhance the protection offered by Pi-Hole. Domovoi will send text alerts via Twilio whenever PiHole detects that someone on the network has accessed a previously-unseen or seldom-seen domain, and whether the request was permitted or blocked. Additionally, it can perform geolocation on the IP addresses returned by the downstream DNS server to decide whether a DNS query should be blocked or permitted based on which country corresponds to the IP address."><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Andy Zuelsdorf\u0027s Blog",
+    
+    "url": "http:\/\/awzuelsdorf.github.io\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "http:\/\/awzuelsdorf.github.io\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "http:\/\/awzuelsdorf.github.io\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "http:\/\/awzuelsdorf.github.io\/posts\/domovoi-pi-hole-enhanced-protection-5-feb-2022\/",
+          "name": "Domovoi pi hole enhanced protection"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : ""
+  },
+  "headline": "Domovoi: PiHole Enhanced Protection",
+  "description" : "Overview\nThis article describes how to set up Domovoi, a Python and Bash repository that created to enhance the protection offered by Pi-Hole. Domovoi will send text alerts via Twilio whenever PiHole detects that someone on the network has accessed a previously-unseen or seldom-seen domain, and whether the request was permitted or blocked. Additionally, it can perform geolocation on the IP addresses returned by the downstream DNS server to decide whether a DNS query should be blocked or permitted based on which country corresponds to the IP address.",
+  "inLanguage" : "en",
+  "wordCount":  1124 ,
+  "datePublished" : "2022-02-05T00:00:00",
+  "dateModified" : "2022-02-05T00:00:00",
+  "image" : "http:\/\/awzuelsdorf.github.io\/",
+  "keywords" : [ "" ],
+  "mainEntityOfPage" : "http:\/\/awzuelsdorf.github.io\/posts\/domovoi-pi-hole-enhanced-protection-5-feb-2022\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "http:\/\/awzuelsdorf.github.io\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "http:\/\/awzuelsdorf.github.io\/",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Domovoi: PiHole Enhanced Protection" />
+<meta property="og:description" content="Overview
+This article describes how to set up Domovoi, a Python and Bash repository that created to enhance the protection offered by Pi-Hole. Domovoi will send text alerts via Twilio whenever PiHole detects that someone on the network has accessed a previously-unseen or seldom-seen domain, and whether the request was permitted or blocked. Additionally, it can perform geolocation on the IP addresses returned by the downstream DNS server to decide whether a DNS query should be blocked or permitted based on which country corresponds to the IP address.">
+<meta property="og:url" content="http://awzuelsdorf.github.io/posts/domovoi-pi-hole-enhanced-protection-5-feb-2022/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Andy Zuelsdorf&#39;s Blog" />
+
+  <meta name="twitter:title" content="Domovoi: PiHole Enhanced Protection" />
+  <meta name="twitter:description" content="Overview
+This article describes how to set up Domovoi, a Python and Bash repository that created to enhance the protection offered by Pi-Hole. Domovoi will send text alerts via Twilio whenever PiHole …">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="generator" content="Hugo 0.102.1" />
+  <link rel="alternate" href="http://awzuelsdorf.github.io/index.xml" type="application/rss+xml" title="Andy Zuelsdorf&#39;s Blog"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="http://awzuelsdorf.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="http://awzuelsdorf.github.io/css/syntax.css" /><link rel="stylesheet" href="http://awzuelsdorf.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://awzuelsdorf.github.io/">Andy Zuelsdorf&#39;s Blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="posts-heading">
+              
+                <h1>Domovoi: PiHole Enhanced Protection</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p><em><strong>Overview</strong></em></p>
+<p>This article describes how to set up <a href="https://github.com/awzuelsdorf/domovoi/">Domovoi</a>, a Python and Bash repository that created to enhance the protection offered by Pi-Hole. Domovoi will send text alerts via Twilio whenever PiHole detects that someone on the network has accessed a previously-unseen or seldom-seen domain, and whether the request was permitted or blocked. Additionally, it can perform geolocation on the IP addresses returned by the downstream DNS server to decide whether a DNS query should be blocked or permitted based on which country corresponds to the IP address. The repository is named after Domovoi, the butler and bodyguard of the titular character and protagonist of the Artemis Fowl novels by Eoin Colfer, some of my favorite novels.</p>
+<p><em><strong>Background/Problem: Improving DNS Filtering</strong></em></p>
+<p>A few months ago, I started using PiHole on my home network. It was very useful for blocking advertisements on my devices, particularly those that don&rsquo;t have ad-blockers available. I noticed my streaming services&rsquo; quality improve just from blocking requests to several domains that were purely for advertising purposes. However, since PiHole operates on a blacklist/whitelist system for domain names or patterns of domain names, it occasionally blocked websites that were necessary. When this happened, I had to log into the Pi-Hole admin console and iteratively filter by time to see which new sites were blocked only recently, which was time-consuming and led to some false positives that took longer than expected to resolve.</p>
+<p>Additionally, in searching through these requests, I found that making a request to one website in a web browser or using an app on a smartphone often would result in requests to multiple publicly registered domains, such as content delivery networks&rsquo; domains, and some of these were clearly advertising-centric domains that Pi-Hole was not blocking. This is understandable since new domains are created every day and Pi-Hole can&rsquo;t assess them all instantly. However, since I did not consciously send requests to these websites, and some of them were only for advertisting purposes, I wanted to be able to identify and block these. However, some of them were necessary for the websites I had interest in to function as intended, so I needed some way of identifying only the newly-seen websites and getting alerts for them so I could look into them (and only them) manually.</p>
+<p><em><strong>Solution: Text Alerts for Previously Unseen or Seldom-Seen Websites</strong></em></p>
+<p>The selected solution was to create a separate process that ran on a cron job on my raspberry pi. This job, on its first invocation, logged into the PiHole admin interface, downloaded the last 30 days worth of DNS queries (both blocked and allowed) and cached this information (including the time the data was fetched) in two files, one for blocked fully qualified domain names and one for permitted domains. The reason for having permitted domains instead of permitted FQDNs is that there were many more permitted FQDNs than blocked FQDNs, so to avoid sending out more text messages than I could reasonably inspect manually, only new, permitted domains were considered instead of new, permitted FQDNs. This didn&rsquo;t usually impede the inspections, since the domain was often enough for to judge on whether a site was trustworthy or not.</p>
+<p>Then, every five minutes, the cron job would spin back up, log into the PiHole admin interface again, request all the DNS queries from the fetch timestamp to the current time, and compare this list with the list of cached DNS queries on disk. If there were any permitted DNS queries whose publicly registered domain names (e.g., tumblr.com or go.com) were not in the list of the last 30 days&rsquo; previously permitted queries, then a text would be sent to my phone with the list of previously unseen, publicly registered domain names. Additionally, any previously-unseen, blocked queries whose fully qualified domain names (e.g., ladygaga.tumblr.com or abcnews.go.com) had not been seen in the cached blocked domains list would be included in a separate text message. The two files would them be updated again with the fetch time, the newly-seen domains would be added to their respective files, and any domains more than 30 days old will be removed from the file. This comprised half of what Domovoi did, but another challenge quickly arose from the information these messages uncovered.</p>
+<p><em><strong>Problem: Blocking Connections to Untrusted Countries</strong></em>
+I had been using Domovoi for several weeks when I got a text that Domovoi had seen a request to the previously-unseen domain of adtarget.com.tr recently. Upon looking up the domain at duckduckgo.com, I found that adtarget.com.tr was a Turkish domain for an advertising service. This domain had been permitted by Pi-Hole, which was not ideal since Pi-Hole is supposed to block sites like this, but there is a good chance that the domain just hadn&rsquo;t been added to the default Gravity blacklist yet. The more disturbing outcome was that I could have been unintentionally making requests to more nefarious countries than Turkey all this time without even knowing it. I looked online for some resources about IP-based geolocation and blocking with Pi-Hole. All the resources I found said that&rsquo;s more of a job for a firewall than Pi-Hole. I expected to see that, but given that most modern applications would reach out to domains instead of single IP addresses, I wanted to see if I could &ldquo;tack on&rdquo; IP-based gelocation and blocking to Pi-Hole anyway.</p>
+<p><em><strong>Solution: DNS resolver with IP Geolocation</strong></em></p>
+<p>Given this, the solution selected was to take the work from the <a href="https://awzuelsdorf.github.io/posts/geoip-blocking-using-windows-firewall-and-regional-internet-registries-8-Oct-2021">Windows GeoIP Firewall project</a> and port it over to my current project. However, that work only covered Europe and Asia, and I wanted to block connections from Communist Cuba also. So to save time, I got enough data to do country-level geolocation from <a href="https://lite.ip2location.com">IP2Location</a> and a small Python DNS resolver using <a href="https://gist.github.com/kotnik/5722085">this helpful Github Gist</a> as a baseline. I then changed my Pi-Hole to point to my custom DNS resolver, which in turn pointed to my Unbound DNS resolver, and tried visiting some blocked sites in Vietnam and Communist China (vietnam.gov.vn and weibo.com to be specific). Both requests were blocked successfully. I then tried visiting whitehouse.gov and <a href="https://www.gov.uk">www.gov.uk</a> and got through without issue. A few more days of using this solution without issue and I had found a solution to my problem.</p>
+<p><em><strong>Caveats and Future work</strong></em></p>
+<p>It would be helpful to integrate Twilio alerts with the GeoIP blocking logic. However, twisted (the python library the GeoIP blocker uses) appears to have issues making DNS requests on the same thread that processes a given DNS request, so this will take more work to implement. Additionally, I want to create a third function for blocking malicious websites based on their ratings from virustotal.com or other websites, as Pi-Hole&rsquo;s Gravity blacklist is more geared toward advertising sites than hosts for malware.</p>
+
+
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="http://awzuelsdorf.github.io/posts/geoip-blocking-using-windows-firewall-and-regional-internet-registries-8-oct-2021/" data-toggle="tooltip" data-placement="top" title="Geoip Blocking Using Windows Firewall and Regional Internet Registries">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2022
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="http://awzuelsdorf.github.io/">Andy Zuelsdorf&#39;s Blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.102.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="http://awzuelsdorf.github.io/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="http://awzuelsdorf.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+
